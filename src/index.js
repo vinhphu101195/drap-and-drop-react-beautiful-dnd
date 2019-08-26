@@ -9,6 +9,43 @@ class App extends React.Component {
 
   onDragEnd = result => {
     //TODO reoder our column
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const column = this.state.columns[source.droppableId];
+    const newTaskIds = Array.from(column.taskIds);
+    // remove this first
+    newTaskIds.splice(source.index, 1);
+    // start at new destionation too add it
+    newTaskIds.splice(destination.index, 0, draggableId);
+
+    //creat new column
+    const newColumn = {
+      ...column,
+      taskIds: newTaskIds
+    };
+
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [newColumn.id]: newColumn
+      }
+    };
+    console.log(this.state);
+    console.log(newState);
+    //update new state
+    this.setState(newState);
   };
 
   render() {
