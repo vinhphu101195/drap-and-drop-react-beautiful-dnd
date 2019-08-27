@@ -59,6 +59,7 @@ class App extends React.Component {
     }
 
     //different column
+    //remove task from old column
     const startTaskIds = Array.from(start.taskIds);
     startTaskIds.splice(source.index, 1);
     const newStart = {
@@ -66,6 +67,7 @@ class App extends React.Component {
       taskIds: startTaskIds
     };
 
+    //add new task to new column
     const finishTaskIds = Array.from(finish.taskIds);
     finishTaskIds.splice(destination.index, 0, draggableId);
     const newFinish = {
